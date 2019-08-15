@@ -815,9 +815,10 @@ def disasm(insword, addr):
 
     # 1101nnnndddddddd "mov.l @(disp,PC),Rn"
     if (insword & 0xf000) == 0xd000:
-        d = displ2ea(4,insword & 0xff,addr)
+        displ = insword & 0xff
+        eaddr = ((addr >> 2)<<2) + 4 + 4*displ
         n = (insword & 0xf00)>>8
-        return "mov.l 0x%016x,r%d" % (d,n)
+        return "mov.l 0x%016x,r%d" % (eaddr, n)
 
     # 0101nnnnmmmmdddd "mov.l @(disp,Rm),Rn"
     if (insword & 0xf000) == 0x5000:
@@ -934,8 +935,9 @@ def disasm(insword, addr):
 
     # 11000111dddddddd "mova @(disp,PC),r0"
     if (insword & 0xff00) == 0xc700:
-        d = displ2ea(4, insword & 0xff, addr)
-        return "mova 0x%016x,r0" % (d)
+        displ = insword & 0xff
+        eaddr = ((addr >> 2)<<2) + 4 + 4*displ
+        return "mova 0x%016x,r0" % eaddr
 
     # 0000nnnn11000011 "movca.l r0,@Rn"
     if (insword & 0xf0ff) == 0xc3:
