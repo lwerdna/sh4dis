@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# thanks to Oleg Endo for his work at:
+# https://github.com/shared-ptr/sh_insns
+# http://www.shared-ptr.com/sh_insns.html
+
 from enum import Enum, auto, unique
 
 #------------------------------------------------------------------------------
